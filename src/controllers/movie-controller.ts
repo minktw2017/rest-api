@@ -2,6 +2,7 @@ import Elysia from "elysia";
 import movie from "../models/movie-model";
 import mongoose from "mongoose";
 import { readdir, mkdir } from "node:fs/promises";
+import { join } from "node:path";
 
 type TCategory = {
   name: string;
@@ -15,6 +16,13 @@ type TCategory = {
   likes: number;
 }
 
+type TFile = {
+	uploadfile: File;
+}
+
+const current: string = import.meta.dirname;
+const controlPath: string = join(current, "../../", "public");
+
 export const MovieControllers = (app: Elysia) => {
 
   app.post("/movie", async (c) => {
@@ -25,10 +33,6 @@ export const MovieControllers = (app: Elysia) => {
     return newMovie
   });
 
-  app.post("/file", async (c) => {
-    console.log(c)
-  });
-
   app.put("/movie/:id", async (c) => {
     const { id } = c.params;
     const { name, category, actress, movieURL, sn, available, thumbURL, views, likes } = c.body as TCategory;
@@ -37,6 +41,31 @@ export const MovieControllers = (app: Elysia) => {
     }, { new: true })
     return updateMovie
   });
+
+  app.put("/data/movie/:sn", async (c)=> {
+		const { sn } = c.params;
+		const {uploadfile} = c.body as TFile;
+    let dirExist: boolean = false;
+
+		const imagePath = `${controlPath}/movie/${sn}/movie.webm`
+
+    console.log(imagePath)
+
+    try {
+      await readdir(imagePath);
+		  // await Bun.write(imagePath, uploadfile)
+      dirExist = true;
+      return {
+        response: "Dir exist."
+      }} catch (err) {
+        // await mkdir(imagePath);
+        // await Bun.write(imagePath, uploadfile)
+        return {
+          response: "Dir doesn't exist."
+        }
+      }
+
+	})
 
   app.get("/movie", async () => {
     const movies = await movie.find();

@@ -1,5 +1,6 @@
 import Elysia from "elysia";
 import element from "../models/element-model";
+import { join } from "node:path";
 
 type TElement = {
     name: string;
@@ -13,6 +14,9 @@ type TElement = {
 type TFile = {
 	uploadfile: File;
 }
+
+const current: string = import.meta.dirname;
+const controlPath: string = join(current, "../../", "public");
 
 export const ElementControllers = ( app: Elysia ) => {
 
@@ -46,7 +50,7 @@ export const ElementControllers = ( app: Elysia ) => {
 		const { field } = c.params;
 		const {uploadfile} = c.body as TFile;
 
-		const imagePath = `${process.env.PUBLIC_PATH}/image/banner/${field}.jpg`
+		const imagePath = `${controlPath}/image/banner/${field}.jpg`
 
 		await Bun.write(imagePath, uploadfile)
 
@@ -59,7 +63,7 @@ export const ElementControllers = ( app: Elysia ) => {
 		const { field } = c.params;
 		const {uploadfile} = c.body as TFile;
 
-		const imagePath = `${process.env.PUBLIC_PATH}/image/sv/${field}.jpg`
+		const imagePath = `${controlPath}/image/sv/${field}.jpg`
 
 		await Bun.write(imagePath, uploadfile)
 
@@ -72,7 +76,7 @@ export const ElementControllers = ( app: Elysia ) => {
 		const { field } = c.params;
 		const {uploadfile} = c.body as TFile;
 
-		const imagePath = `${process.env.PUBLIC_PATH}/image/feature/${field}.jpg`
+		const imagePath = `${controlPath}/image/feature/${field}.jpg`
 
 		await Bun.write(imagePath, uploadfile)
 
