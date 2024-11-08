@@ -21,7 +21,7 @@ mongoose
     dbName: "Elysia",
   } as ConnectOptions)
   .then(() => {
-    app.use(staticPlugin()).listen(3001, () => {
+    app.use(staticPlugin()).listen(process.env.PORT, () => {
       console.log(
         `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
       );
