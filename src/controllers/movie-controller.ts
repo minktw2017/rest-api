@@ -35,7 +35,7 @@ export const MovieControllers = (app: Elysia) => {
       movieURL: `/data/public/movie/${sn}/movie.webm`,
       sn,
       available,
-      thumbURL: `/data/public/movie/${sn}/image.webm`,
+      thumbURL: `/data/public/movie/${sn}/image.webp`,
       views,
       likes,
     });
