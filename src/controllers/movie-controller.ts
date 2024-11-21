@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { readdir, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import fs from 'fs';
+import para from "../models/params-model";
 
 type TCategory = {
   name: string;
@@ -131,6 +132,15 @@ export const MovieControllers = (app: Elysia) => {
       success: true,
     };
   });
+
+  app.get("/addviews", async() => {
+    const paras = await para.find()
+    await paras[0].updateOne({$inc: {views: 1}})
+
+    return {
+      data: paras[0]
+    }
+  })
 
   return Promise.resolve(app)
 }
