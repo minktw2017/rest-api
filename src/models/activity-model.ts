@@ -5,7 +5,8 @@ export interface IAct extends mongoose.Document {
   title: string;
   imagepath: string;
   filepath: string;
-  views: number
+  views: number,
+  likes: number
 };
 
 const ActSchema = new mongoose.Schema({
@@ -14,6 +15,7 @@ const ActSchema = new mongoose.Schema({
   imagepath: { type: String },
   filepath: { type: String },
   views: { type: Number, default: 1 },
+  likes: { type: Number, default: 1 },
 });
 
 export default mongoose.model<IAct>("Act", ActSchema);

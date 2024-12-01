@@ -11,6 +11,7 @@ type TAct = {
   imagepath: string;
   filepath: string;
   views: number;
+  likes: number;
 }
 type TFile = {
   uploadfile: File;
@@ -27,14 +28,15 @@ export const UploadControllers = (app: Elysia) => {
   });
   // 新增活動
   app.post("/upload", async (c) => {
-      const { sn, title, imagepath, filepath, views } = c.body as TAct;
+      const { sn, title, imagepath, filepath, views, likes } = c.body as TAct;
 
       const newAct = await act.create({
         sn,
         title,
-        filepath: `/data/public/act/${sn}/movie.webm`,
+        filepath,
         imagepath: `/data/public/act/${sn}/image.webp`,
         views,
+        likes
       })
 
     return newAct
@@ -42,14 +44,15 @@ export const UploadControllers = (app: Elysia) => {
   // 修改活動
   app.put("/upload/:id", async (c)=> {
     const { id } = c.params;
-    const { sn, title, imagepath, filepath, views } = c.body as TAct;
+    const { sn, title, imagepath, filepath, views, likes } = c.body as TAct;
 
     const updateAct = await act.findByIdAndUpdate(id, {
       sn,
       title,
-      filepath: `/data/public/act/${sn}/movie.webm`,
+      filepath,
       imagepath: `/data/public/act/${sn}/image.webp`,
       views,
+      likes
     }, {new: true})
     return updateAct
   });
