@@ -45,12 +45,12 @@ export const MovieControllers = (app: Elysia) => {
 
   app.put("/movie/:id", async (c) => {
     const { id } = c.params;
-    const { name, category, actress, sn, available, views, likes } = c.body as TCategory;
+    const { name, category, actress, sn, movieURL, available, views, likes } = c.body as TCategory;
     const updateMovie = await movie.findByIdAndUpdate(id, {
       name,
       category,
       actress,
-      movieURL: `/data/public/movie/${sn}/movie.webm`,
+      movieURL,
       sn,
       available,
       thumbURL: `/data/public/movie/${sn}/image.webp`,
